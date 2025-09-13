@@ -1,0 +1,14 @@
+.expense-card {
+  width: 200px;
+  border-radius: 15px;
+}
+
+.expense-card .circle-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
