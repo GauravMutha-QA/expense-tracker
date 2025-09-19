@@ -1,13 +1,24 @@
 .budget-card {
   width: 200px;
-  border-radius: 15px;
+  border-radius: 14px; /* match expense card */
+  border: 1px solid #dcdcdc;
+  background: #fff;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.budget-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); /* same as expense card */
 }
 
 .budget-card .circle-icon {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 1px solid black;
+  border: 1px solid #ddd; /* softened to match expense icon style */
+  background: #f9f9f9; /* same subtle bg as expense icons */
   display: flex;
   align-items: center;
   justify-content: center;

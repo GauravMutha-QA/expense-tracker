@@ -6,24 +6,8 @@ import ExpesneModalForm from "./ExpesneModalForm";
 
 function AddCardModalForm({ showBudget, showModal, handleClose }) {
 
-  // const initialFormData = {
-  //   Amount: "",
-  //   Type: "",
-  //   Account: "",
-  //   Comment: "",
-  //   Tag: "",
-  //   TransferTo: "",
-  // };
-
-
-  // useEffect(() => {
-  //   if (!showModal) {
-  //     setFormData(initialFormData);
-  //   }
-  // }, [showModal]);
-
   return (
-    <Modal show={showModal} onHide={handleClose} centered>
+    <Modal show={showModal} onHide={()=>handleClose('add-expense')} centered>
       <Modal.Header closeButton className="custom-modal">
         <Modal.Title>{showBudget ? "Add Budget" : "Add Expense"}</Modal.Title>
       </Modal.Header>
@@ -31,7 +15,7 @@ function AddCardModalForm({ showBudget, showModal, handleClose }) {
         {showBudget ? <BudgetModalForm /> : <ExpesneModalForm/>}
       </Modal.Body>
       <Modal.Footer className="custom-modal">
-        <Button variant="secondary" onClick={handleClose}>
+        <Button variant="secondary" onClick={()=>handleClose('add-expense')}>
           Close
         </Button>
         <Button variant="primary" form="modal-form" type="submit">

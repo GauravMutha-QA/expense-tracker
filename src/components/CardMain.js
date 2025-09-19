@@ -6,15 +6,13 @@ import { BudgetDetail, ExpenseDetail } from "../App";
 
 function CardMain() {
   const { showBudget, budgetList } = useContext(BudgetDetail);
-  const { expenseList, expenseFilter } = useContext(ExpenseDetail);
-  const renderExpenseCards = (list, filter) => {
-    console.log(filter);
+  const { expenseList, expenseFilters} = useContext(ExpenseDetail);
+  const renderExpenseCards = (list, filters) => {
+    console.log(filters,list);
     let listProjection = [];
-    if (filter === "Time") {
-      listProjection = [...list].sort((a, b) => {
-        return new Date(b.Time) - new Date(a.Time)
-      });
-    }
+    listProjection=list
+    .filter((item)=> filters["Accounts"].length===0 || filters["Accounts"].includes(item.Account) || filters["Accounts"].includes(item.TransferTo))
+    .filter((item)=> filters["Tags"].length===0 || filters["Tags"].includes(item.Tag))
     return listProjection.map((expense) => (
       <ExpenseCard key={expense.Id} expense={expense} />
     ));
@@ -22,12 +20,12 @@ function CardMain() {
   return (
     <>
       <div style={{ height: "450px", overflowY: "auto",overflowX: "hidden", scrollbarWidth:'thin',scrollbarColor:' white #232a4d'}}>
-        <div className="row g-3 ">
+        <div className="row g-3 pt-1">
           {showBudget
             ? budgetList.map((budget) => (
                 <BudgetCard key={budget.Id} budget={budget} />
               ))
-            : renderExpenseCards(expenseList, expenseFilter)}
+            : renderExpenseCards(expenseList, expenseFilters)}
         </div>
       </div>
     </>

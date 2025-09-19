@@ -1,14 +1,79 @@
 .expense-card {
-  width: 200px;
-  border-radius: 15px;
+  border-radius: 14px;
+  border: 1px solid #dcdcdc;
+  background: #fff;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem; /* base font bigger than bootstrap’s 0.875rem */
 }
 
-.expense-card .circle-icon {
-  width: 40px;
-  height: 40px;
+.expense-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* header */
+.expense-card .card-header {
+  background: #fafafa;
+  border-bottom: 1px solid #eaeaea;
+  padding: 1rem 1.25rem;
+}
+
+/* text sizes */
+.medium-text {
+  font-size: 1rem;
+}
+
+.expense-meta {
+  font-size: 0.95rem;
+}
+
+.expense-comment {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* placeholder keeps min space */
+.expense-comment-wrapper {
+  min-height: 2rem;
+}
+
+/* bigger icon */
+.expense-tag-icon-lg {
+  width: 64px;
+  height: 64px;
+  background: #f9f9f9;
   border-radius: 50%;
-  border: 1px solid black;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+}
+
+.expense-tag-icon-lg img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+/* small arrow icons beside account names */
+.account-arrow {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  opacity: 0.85;
+}
+
+/* Account row styling */
+.expense-account {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+  display: flex;
+  justify-content: center; /* center like tag/timestamp */
+  align-items: center;
 }

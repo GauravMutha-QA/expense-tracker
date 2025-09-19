@@ -1,35 +1,97 @@
-import React from "react";
-import "./ExpenseCard.css"; // import the CSS
+import React, { useContext } from "react";
+import "./ExpenseCard.css";
 import { format } from "date-fns";
+import { BudgetDetail } from "../App";
 
-function ExpenseCard({expense}) {
+function ExpenseCard({ expense }) {
+  const { accountIdToName } = useContext(BudgetDetail);
+
+  const isDebit = expense.Type === "Spend" || expense.Type === "Transfer";
+  const amountColor = isDebit ? "text-danger" : "text-success";
+  const sign = isDebit ? "-" : "+";
+
+  // account display logic
+  let accountDisplay;
+  if (expense.Type === "Transfer") {
+    accountDisplay = (
+      <div className="account-transfer d-flex align-items-center">
+        <span className="fw-semibold text-muted medium-text me-2">
+          {accountIdToName[expense.Account]}
+        </span>
+        <img
+          src="/images/Transfer-Flow-Icon.png"
+          alt="transfer"
+          className="account-arrow"
+        />
+        <span className="fw-semibold text-muted medium-text ms-2">
+          {accountIdToName[expense.TransferTo]}
+        </span>
+      </div>
+    );
+  } else if (expense.Type === "Spend") {
+    accountDisplay = (
+      <div className="d-flex align-items-center">
+        <span className="fw-semibold text-muted medium-text me-2">
+          {accountIdToName[expense.Account]}
+        </span>
+        <img
+          src="/images/Spend-Flow-Icon.png"
+          alt="spend"
+          className="account-arrow"
+        />
+      </div>
+    );
+  } else if (expense.Type === "Income") {
+    accountDisplay = (
+      <div className="d-flex align-items-center">
+        <span className="fw-semibold text-muted medium-text me-2">
+          {accountIdToName[expense.Account]}
+        </span>
+        <img
+          src="/images/Income-Flow-Icon.png"
+          alt="income"
+          className="account-arrow"
+        />
+      </div>
+    );
+  }
+
   return (
-    <div className="col-12 col-md-6 col-lg-3 d-flex justify-content-center">
-      <div
-        className="card text-center expense-card"
-        style={{ backgroundColor: "#ffd078" }}
-      >
-        {/* Top section (Amount + Bank Name in same row) */}
-        <div className="d-flex justify-content-between align-items-center p-3 border-bottom border-dark">
-          <h4 style={{'color':`${(expense.Type==='Spend')?'Red':'Green'}`}} className="mb-0">{`${(expense.Type==='Spend')?'-':'+'}${expense.Amount}`} </h4>
-          <span className="fw-bold">{expense.Account}</span>
+    <div className="col-12 col-md-6 col-lg-4 d-flex justify-content-center align-items-stretch">
+      <div className="card expense-card shadow-sm h-100">
+        {/* header only for amount */}
+        <div className="card-header d-flex justify-content-center align-items-center">
+          <h3 className={`mb-0 fw-bold ${amountColor}`}>
+            {sign}
+            {expense.Amount}
+          </h3>
         </div>
 
-        {/* Middle section (Time) */}
-        <div className="p-3 border-bottom border-dark">
-          <span>{format(expense.Time, "h:mm a dd/MM/yyyy")}</span>
-        </div>
+        <div className="card-body d-flex flex-column py-3 px-4">
+          {/* new row for accounts */}
+          <div className="expense-account mb-3">{accountDisplay}</div>
 
-        {/* New Description row */}
-        <div className="p-3 border-bottom border-dark">
-          <span>{expense.Comment}</span>
-        </div>
+          <div className="expense-meta text-muted medium-text mb-3">
+            {format(expense.Time, "h:mm a, dd MMM yyyy")}
+          </div>
 
-        {/* Bottom section (Only circular icon) */}
-        <div className="d-flex justify-content-center p-2">
-          <div className="circle-icon">
-            {/* Replace with icon library (Bootstrap Icons, FontAwesome, etc.) */}
-            <i className="bi bi-tags"></i>
+          <div className="expense-comment-wrapper mb-3">
+            {expense.Comment ? (
+              <p className="expense-comment">{expense.Comment}</p>
+            ) : (
+              <div className="expense-comment-placeholder" />
+            )}
+          </div>
+
+          <div className="mt-auto text-center">
+            <div className="expense-tag-icon-lg">
+              <img
+                src={`/images/${
+                  expense.Tag === "Others" ? expense.Type : expense.Tag
+                }.png`}
+                alt={expense.Tag}
+              />
+            </div>
           </div>
         </div>
       </div>

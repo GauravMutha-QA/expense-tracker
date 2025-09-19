@@ -19,12 +19,14 @@ function ExpesneModalForm() {
     Time: new Date(),
   };
 
-  const { setExpenseList } = useContext(ExpenseDetail);
+  
+
+  const { setExpenseList, Tags } = useContext(ExpenseDetail);
   const { setBudgetList, budgetList } = useContext(BudgetDetail);
   const ExampleCustomInput = forwardRef(
     ({ value, onClick, className }, ref) => (
       <button
-        type="button" // 👈 very important: stops form submission
+        type="button"
         className={className}
         onClick={onClick}
         ref={ref}
@@ -37,20 +39,15 @@ function ExpesneModalForm() {
 
   const handleExpenseSubmit = (values) => {
     //check for any invalid transaction
-    const error = expenseValidation(values, budgetList);
-    if (error.length) {
-      alert(error);
-      return;
+    const alertMessage = expenseValidation(values, budgetList);
+    if (alertMessage.length) {
+      alert(alertMessage);
     }
 
     //Update the expenses list
     setExpenseList((prev) => {
       values.Id = crypto.randomUUID();
-      const { NewAccount } = budgetList.find(
-        (budget) => budget.Id === values.Account
-      );
-      let newExpense = { ...values, Account: NewAccount};
-      return [...prev, newExpense];
+      return [...prev, values];
     });
     //update the budget after transaction
     setBudgetList((prevList) => budgetUpdate(values, prevList));
@@ -165,14 +162,24 @@ function ExpesneModalForm() {
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label>Tag</Form.Label>
-        <Form.Control
+        <Form.Label>
+          Tag
+        </Form.Label>
+        <Form.Select
           name="Tag"
-          type="text"
           value={values.Tag}
           onChange={changeValue}
           isInvalid={errors.Tag}
-        />
+        >
+          <option value="" disabled>
+            -- Select an option --
+          </option>
+          {Tags.map((tag) => (
+            <option key={tag} value={tag}>
+              {tag}
+            </option>
+          ))}
+        </Form.Select>
         <Form.Control.Feedback type="invalid">
           {errors.Tag}
         </Form.Control.Feedback>
