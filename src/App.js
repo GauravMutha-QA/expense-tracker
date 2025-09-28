@@ -15,6 +15,7 @@ function App() {
   ]);
   const [showExpense, setShowExpense] = useState(false);
   const [expenseList, setExpenseList] = useState([]);
+  const[expenseOrder,setExpenseOrder]=useState('asc')
   const [expenseFilters,setExpenseFilters]=useState({
     'Accounts':[],
     'Tags':[],
@@ -53,7 +54,7 @@ function App() {
       <BudgetDetail.Provider
         value={{ showBudget, setShowBudget, budgetList, setBudgetList ,accountIdToName}}
       >
-        <ExpenseDetail.Provider value={{ showExpense, setShowExpense, expenseList, setExpenseList, expenseFilters,setExpenseFilters,Tags}}>
+        <ExpenseDetail.Provider value={{ showExpense, setShowExpense, expenseList, setExpenseList, expenseFilters,setExpenseFilters,Tags,expenseOrder,setExpenseOrder}}>
           <Navbar></Navbar>
           <Main></Main>
         </ExpenseDetail.Provider>

@@ -5,23 +5,23 @@ import AddCardModalForm from "./AddCardModalForm";
 import Button from "react-bootstrap/esm/Button";
 
 function getRandomColor() {
-  // 15 soft pastel colors
+  // 15 harmonious pastel colors for #e0dfdf cards and #0a1d2c background
   const pastel = [
-    "#FFD6E0", // pink
-    "#D6EFFF", // light blue
-    "#FFF5BA", // pale yellow
-    "#D6FFD6", // mint green
-    "#E0D6FF", // lavender
-    "#FFE0D6", // peach
-    "#D6FFF5", // aqua
-    "#FDE2FF", // light purple
-    "#E2F0CB", // light lime
-    "#FFDFD3", // blush
-    "#C2F0FC", // sky blue
-    "#F6DFEB", // light magenta
-    "#F9F7D9", // cream
-    "#D9F9F7", // pale teal
-    "#F7D9F9", // light pink
+    "#7FB3FF", // vivid blue
+    "#FFB3B3", // bold pink
+    "#A3FFD6", // aqua green
+    "#FFD36E", // rich yellow
+    "#FFABAB", // coral
+    "#B5FFFC", // turquoise
+    "#BCA7FF", // purple
+    "#FFB7CE", // rose
+    "#A7FF83", // spring green
+    "#FFB347", // orange
+    "#B5EAEA", // teal
+    "#FFB4A2", // salmon
+    "#B2FF66", // lime
+    "#FFB6B9", // blush
+    "#A0E7E5", // cyan
   ];
   return pastel[Math.floor(Math.random() * pastel.length)];
 }
@@ -77,7 +77,6 @@ function BudgetCard({
           else return [{ ...prevExpense, Invalid: { id, accountName } }];
         } else return [prevExpense];
       });
-      
 
       return updatedExpenseList;
     });

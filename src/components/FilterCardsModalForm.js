@@ -46,6 +46,7 @@ function FilterCardsModalForm({
       onHide={() => handleClose("apply-filter")}
       backdrop="static" // <-- prevents closing on outside click
       keyboard={false}
+      centered
     >
       <Modal.Header closeButton>
         <Modal.Title>Filter Options</Modal.Title>

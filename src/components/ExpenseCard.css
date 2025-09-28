@@ -1,7 +1,7 @@
 .expense-card {
   border-radius: 14px;
   border: 1px solid #dcdcdc;
-  background: #fff;
+  background:  #f1f0f0 !important;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   display: flex;
   flex-direction: column;

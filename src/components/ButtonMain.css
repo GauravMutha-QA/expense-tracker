@@ -1,0 +1,190 @@
+/* ButtonMain.css - Refactored */
+.button-text {
+  display: inline;
+}
+
+.button-icon {
+  display: none;
+}
+
+.filter-badge {
+  display: none;
+}
+
+.filter-icon-with-badge {
+  display: contents;
+}
+
+/* Main container - prevent wrapping issues */
+.button-main-container {
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  gap: 12px;
+  overflow: hidden;
+}
+
+/* Badges container - flexible but with limits */
+.filter-badges-container {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 70%;
+  max-height: 50px;
+  overflow: hidden;
+}
+
+.filter-badges-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  max-height: 50px;
+  padding-bottom: 8px;
+  flex-wrap: nowrap !important;
+}
+
+.filter-badges-scroll .badge {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Button group - fixed width, no wrapping */
+.button-group {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+  min-width: 0;
+}
+
+/* Consistent button styles */
+.button-group .btn,
+.button-group .dropdown-toggle {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.add-button,
+.filter-button {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+.sort-button .dropdown-toggle {
+  padding: 6px 12px;
+}
+
+/* Scrollbar styling */
+.filter-badges-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.filter-badges-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.filter-badges-scroll::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.filter-badges-scroll::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Mobile styles */
+@media (max-width: 767.98px) {
+  .button-main-container {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .filter-badges-container {
+    display: none !important;
+  }
+  
+  .button-group {
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+  }
+  
+  .button-text {
+    display: none;
+  }
+  
+  .button-icon {
+    display: inline-block;
+  }
+  
+  .add-button,
+  .filter-button,
+  .sort-button .btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50% !important;
+    padding: 0;
+  }
+  
+  .filter-button {
+    width: auto !important;
+    padding: 0 12px !important;
+    border-radius: 20px !important;
+  }
+  
+  .filter-badge {
+    display: inline-block;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 10px;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-left: 4px;
+    line-height: 1;
+    min-width: 18px;
+    text-align: center;
+  }
+  
+  .filter-icon-with-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sort-button .btn {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+  }
+  
+  .sort-button .dropdown-menu {
+    right: 0;
+    left: auto;
+  }
+}
+
+/* Medium screen optimization */
+@media (max-width: 991.98px) and (min-width: 768px) {
+  .filter-badges-container {
+    max-width: 60%;
+  }
+  
+  .button-group .btn,
+  .button-group .dropdown-toggle {
+    font-size: 0.85rem;
+    padding: 5px 10px;
+  }
+}
+
+/* Small desktop optimization */
+@media (max-width: 1199.98px) and (min-width: 992px) {
+  .filter-badges-container {
+    max-width: 65%;
+  }
+}

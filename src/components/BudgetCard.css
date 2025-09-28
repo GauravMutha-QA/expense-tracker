@@ -1,9 +1,8 @@
 .budget-card {
-  position: relative;
   width: 200px;
   border-radius: 14px; /* match expense card */
-  border: 1px solid #dcdcdc;
-  background: #fff;
+  border: 1px solid hsl(0, 0%, 86%);
+  background: #f1f0f0 !important;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   display: flex;
   flex-direction: column;
