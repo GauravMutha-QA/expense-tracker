@@ -1,5 +1,4 @@
 import "./App.css";
-import ButtonGroup from "./components/ButtonGroup";
 import Navbar from "./components/Navbar";
 import Main from "./components/Main";
 import React, { useMemo, useState } from "react";
@@ -10,22 +9,26 @@ export const ExpenseDetail = React.createContext();
 function App() {
   const [showBudget, setShowBudget] = useState(true);
   const [budgetList, setBudgetList] = useState([
-    {Id:crypto.randomUUID(),  NewAccount: "SBI", Amount:3240,Tag:"" },
-    {Id:crypto.randomUUID(),  NewAccount: "Kotak", Amount:3240,Tag:"" },
-    {Id:crypto.randomUUID(),  NewAccount: "BOB", Amount:3240,Tag:"" },
+    {Id:crypto.randomUUID(),  NewAccount: "SBI", Amount:1000},
+    {Id:crypto.randomUUID(),  NewAccount: "Kotak", Amount:1000 },
+    {Id:crypto.randomUUID(),  NewAccount: "BOB", Amount:1000},
   ]);
   const [showExpense, setShowExpense] = useState(false);
   const [expenseList, setExpenseList] = useState([]);
   const [expenseFilters,setExpenseFilters]=useState({
     'Accounts':[],
-    'Tags':[]
+    'Tags':[],
   });
 
   const accountIdToName=useMemo(()=>{
     const map={};
-    budgetList.forEach(budget=>map[budget.Id]=budget.NewAccount)
+    budgetList.forEach(budget=>map[budget.Id]=budget.NewAccount);
+    expenseList.forEach((expense)=>{
+      if(expense.Invalid!==undefined) map[expense.Invalid.id]=expense.Invalid.accountName;
+    })
     return map;
-  },[budgetList]);
+  },[budgetList,expenseList]);
+  
   const Tags = [
       "Housing",
       "Food & Groceries",

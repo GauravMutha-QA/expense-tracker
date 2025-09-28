@@ -5,21 +5,33 @@ import { BudgetDetail } from "../App";
 import { budgetSchema } from "../validation/schema.js";
 import { budgetValidation } from "../validation/budgetRules.js";
 
-function BudgetModalForm() {
-  const initialBudgetValues = { Amount: "", NewAccount: "", Tag: "" };
-
-  const { budgetList,setBudgetList } = useContext(BudgetDetail);
+function BudgetModalForm({ mode, currentBudget, handleClose }) {
+  const initialBudgetValues = React.useMemo(
+    () =>  currentBudget || ({ Amount: "", NewAccount: ""}),
+    [currentBudget]
+  );
+  const { budgetList, setBudgetList } = useContext(BudgetDetail);
 
   const handleBudgetSubmit = (values) => {
-    const error = budgetValidation(values, budgetList);
+    const error = budgetValidation(values, mode, currentBudget, budgetList);
     if (error.length) {
       alert(error);
       return;
+    } else handleClose(mode === "edit" ? "edit-budget" : "add-budget");
+
+    if (mode === "edit") {
+      setBudgetList((prevBudgetList) => {
+        return prevBudgetList.map((prevBudget) => {
+          if (prevBudget.Id === currentBudget.Id) return values;
+          return prevBudget;
+        });
+      });
+    } else {
+      values.Id = crypto.randomUUID();
+      setBudgetList((prev) => {
+        return [...prev, values];
+      });
     }
-    values.Id = crypto.randomUUID();
-    setBudgetList((prev) => {
-      return [...prev, values];
-    });
   };
 
   const { values, errors, changeValue, handleSubmit } = useForm(
@@ -55,20 +67,6 @@ function BudgetModalForm() {
         />
         <Form.Control.Feedback type="invalid">
           {errors.NewAccount}
-        </Form.Control.Feedback>
-      </Form.Group>
-
-      <Form.Group className="mb-3">
-        <Form.Label>Tag</Form.Label>
-        <Form.Control
-          name="Tag"
-          type="text"
-          value={values.Tag}
-          onChange={changeValue}
-          isInvalid={errors.Tag}
-        />
-        <Form.Control.Feedback type="invalid">
-          {errors.Tag}
         </Form.Control.Feedback>
       </Form.Group>
     </Form>

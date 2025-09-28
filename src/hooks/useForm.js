@@ -1,9 +1,15 @@
-import { useState } from "react";
-import { validateTransaction } from "../validation/budgetRules";
+import { useEffect, useState } from "react";
 
-function useForm(initialValues, validationSchema, submitHandler) {
+function useForm(initialValues, validationSchema, submitHandler,mode) {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
+
+
+
+   useEffect(() => {
+    setValues(initialValues);
+  }, [initialValues]);
+
 
   const changeValue = (event) => {
     let { name, value } = event.target;
@@ -15,13 +21,14 @@ function useForm(initialValues, validationSchema, submitHandler) {
     });
   };
 
+ 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     //validate schema
     try {
       await validationSchema.validate(values, { abortEarly: false });
-      setValues(initialValues);
       setErrors({});
       submitHandler(values);
     } catch (error) {

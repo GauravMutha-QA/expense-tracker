@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext, useEffect, useState } from "react";
+import { forwardRef, useContext, useMemo } from "react";
 import Form from "react-bootstrap/Form";
 import { BudgetDetail, ExpenseDetail } from "../App";
 import useForm from "../hooks/useForm";
@@ -8,21 +8,22 @@ import { budgetUpdate } from "../validation/budgetRules.js";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function ExpesneModalForm() {
-  const initialExpenseValues = {
+function ExpesneModalForm({mode,currentExpense,handleClose}) {
+  const initialExpenseValues = useMemo(()=>{
+    return (currentExpense || {
     Amount: 0,
     Type: "",
     Account: "",
     Comment: "",
     Tag: "",
     TransferTo: "",
-    Time: new Date(),
-  };
-
-  
+    Time: new Date()
+  })
+  },[currentExpense]);
 
   const { setExpenseList, Tags } = useContext(ExpenseDetail);
   const { setBudgetList, budgetList } = useContext(BudgetDetail);
+  
   const ExampleCustomInput = forwardRef(
     ({ value, onClick, className }, ref) => (
       <button
@@ -30,7 +31,7 @@ function ExpesneModalForm() {
         className={className}
         onClick={onClick}
         ref={ref}
-        style={{ "margin-left": "10px" }}
+        style={{ "marginLeft": "10px" }}
       >
         {value || "Select date"}
       </button>
@@ -43,20 +44,29 @@ function ExpesneModalForm() {
     if (alertMessage.length) {
       alert(alertMessage);
     }
-
+    
     //Update the expenses list
     setExpenseList((prev) => {
+      if(mode==='edit'){
+        return prev.map((oldExpense)=>{
+          return (oldExpense.Id===values.Id)?values:oldExpense;
+        })
+      }
       values.Id = crypto.randomUUID();
       return [...prev, values];
     });
     //update the budget after transaction
-    setBudgetList((prevList) => budgetUpdate(values, prevList));
+    setBudgetList((prevList) => budgetUpdate(values, prevList,mode,currentExpense));
+    handleClose(mode==='edit'?'edit-expense':'add-expense')
+
+    
   };
 
   const { values, errors, changeValue, handleSubmit } = useForm(
     initialExpenseValues,
     expenseSchema,
-    handleExpenseSubmit
+    handleExpenseSubmit,
+    mode
   );
 
   return (
@@ -87,7 +97,7 @@ function ExpesneModalForm() {
             -- Select type --
           </option>
           <option value="Spend">Spend</option>
-          <option value="Transfer">Transfer</option>
+          {budgetList.length>1 && <option value="Transfer">Transfer</option>}
           <option value="Income">Income</option>
         </Form.Select>
         <Form.Control.Feedback type="invalid">

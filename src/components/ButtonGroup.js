@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import  { useContext } from "react";
 import { BudgetDetail, ExpenseDetail } from "../App";
 
 function ButtonGroup() {
 
-  let {showBudget,setShowBudget}=useContext(BudgetDetail)
+  let {showBudget,setShowBudget, budgetList}=useContext(BudgetDetail)
   let {showExpense,setShowExpense}=useContext(ExpenseDetail)
 
   const handleClick=(event)=>{
@@ -38,7 +38,7 @@ function ButtonGroup() {
       >
         <div className="navbar-nav gap-1">
           <button id='budget' className={`nav-link ${showBudget?'active':''} btn btn-primary`} style={{'color':'white'}} onClick={handleClick}>Budget</button>
-          <button id="expense" className={`nav-link btn btn-primary ${showExpense?'active':''}`} style={{'color':'white'}} onClick={handleClick}>Expense</button>
+          <button id="expense" className={`nav-link btn btn-primary ${showExpense?'active':''}`} style={{'color':'white'}} onClick={handleClick} disabled={!(budgetList.length )}>Expense</button>
         </div>
       </div>
     </>

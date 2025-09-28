@@ -16,7 +16,7 @@ export const expenseSchema = yup.object().shape({
     then: (schema) => schema.required("Please select an account"),
     otherwise: (schema) => schema.notRequired(),
   }),
-  Time:yup.string()
+  Time:yup.string(),
 });
 
 export const budgetSchema = yup.object().shape({
@@ -26,6 +26,5 @@ export const budgetSchema = yup.object().shape({
     .positive(msg)
     .integer(msg)
     .required(msg),
-  NewAccount: yup.string().required("Plese enter the account name"),
-  Tag: yup.string().required("Please select a tag"),
+  NewAccount: yup.string().required("Plese enter the account name")
 });
